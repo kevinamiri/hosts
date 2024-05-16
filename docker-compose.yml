@@ -3,10 +3,10 @@ services:
   monitoring:
     build: .
     environment:
-      - SMTP_HOST=your_aws_smtp_host
-      - SMTP_PORT=587
-      - SMTP_USERNAME=your_aws_smtp_username
-      - SMTP_PASSWORD=your_aws_smtp_password
-      - FROM_EMAIL=sender@example.com
-      - TO_EMAIL=recipient@example.com
-      - HOSTS_URL=https://example.com/hosts.csv
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - TO_EMAIL=${TO_EMAIL}
+      - HOSTS_URL=${HOSTS_URL}

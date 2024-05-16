@@ -7,12 +7,16 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # AWS SMTP configuration
-SMTP_HOST = 'your_aws_smtp_host'
-SMTP_PORT = 587
-SMTP_USERNAME = 'your_aws_smtp_username'
-SMTP_PASSWORD = 'your_aws_smtp_password'
-FROM_EMAIL = 'sender@example.com'
-TO_EMAIL = 'recipient@example.com'
+import os
+
+# AWS SMTP configuration
+SMTP_HOST = os.environ['SMTP_HOST']
+SMTP_PORT = int(os.environ['SMTP_PORT'])
+SMTP_USERNAME = os.environ['SMTP_USERNAME']
+SMTP_PASSWORD = os.environ['SMTP_PASSWORD']
+FROM_EMAIL = os.environ['FROM_EMAIL']
+TO_EMAIL = os.environ['TO_EMAIL']
+HOSTS_URL = os.environ['HOSTS_URL']
 
 # URL to fetch the list of hosts and ports
 HOSTS_URL = 'https://example.com/hosts.csv'
