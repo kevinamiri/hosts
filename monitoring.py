@@ -37,6 +37,17 @@ def check_host(host, port, timeout=5):
     except (socket.timeout, ConnectionRefusedError, OSError):
         return False
 
+def check_host_web(host, port, timeout=5):
+    url = f"https://{host}:{port}"
+    try:
+        response = requests.get(url, timeout=timeout)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+    except (requests.exceptions.RequestException, requests.exceptions.Timeout):
+        return False
+
 def send_email(subject, body):
     msg = MIMEMultipart()
     msg['From'] = FROM_EMAIL
@@ -57,6 +68,7 @@ def monitor_hosts():
         futures = [executor.submit(check_host, host, port) for host, port in hosts]
         for i, future in enumerate(concurrent.futures.as_completed(futures)):
             host, port = hosts[i]
+            # print(SMTP_HOST)
             if not future.result():
                 down_hosts.append((host, port))
 
