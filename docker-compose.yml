@@ -10,3 +10,5 @@ services:
       - FROM_EMAIL=${FROM_EMAIL}
       - TO_EMAIL=${TO_EMAIL}
       - HOSTS_URL=${HOSTS_URL}
+    ports:
+      - "8611:8611"

@@ -1,3 +1,26 @@
+You will be provided with files and its contexts inside ``` code blocks ```. Your Task is to provide assistant base on these files context and given defined Goals
+
+
+
+## File: docker-compose.yml
+
+```YAML
+version: '3'
+services:
+  monitoring:
+    build: .
+    environment:
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - TO_EMAIL=${TO_EMAIL}
+      - HOSTS_URL=${HOSTS_URL}
+```
+---
+## File: monitoring.py
+```Python
 import csv
 import smtplib
 import concurrent.futures
@@ -5,11 +28,9 @@ import socket
 import requests
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from fastapi import FastAPI
 
 # AWS SMTP configuration
 import os
-
 
 # AWS SMTP configuration
 SMTP_HOST = os.environ['SMTP_HOST']
@@ -20,7 +41,6 @@ FROM_EMAIL = os.environ['FROM_EMAIL']
 TO_EMAIL = os.environ['TO_EMAIL']
 HOSTS_URL = os.environ['HOSTS_URL']
 
-app = FastAPI()
 
 def fetch_hosts_from_url(url):
     response = requests.get(url)
@@ -66,12 +86,9 @@ def monitor_hosts():
         body += '\n'.join(f'{host}:{port}' for host, port in down_hosts)
         send_email(subject, body)
 
-    
-@app.get("/monitor")
-def trigger_monitoring():
-    monitor_hosts()
-    return {"message": "Monitoring triggered"}
-
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8611)
+    monitor_hosts()
+
+```
+---
+Goal: Given codes and contexts, please create a readme.me for describing what this project will do.
